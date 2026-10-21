@@ -1,0 +1,30 @@
+01 Calculator - Swing components and action listener
+02 Student Registration Form - JTextField, JRadioButton, JComboBox, JCheckBox, ButtonGroup
+03 FlowLayout, BorderLayout, GridLayout
+04 Temperature Converter
+05 Student Information Form
+06 Menu-driven Text Editor
+07 Login using hard-coded credentials
+08 MouseListener
+09 KeyListener
+10 MouseAdapter
+11 Arithmetic operations using named/anonymous inner classes
+12 JColorChooser
+13 Display records using JDBC
+14 Insert using PreparedStatement
+15 Update student by ID
+16 Delete student by ID
+17 Search student by ID/name
+18 SQL JOIN using JDBC
+19 JDBC results in JTable
+20 JDBC commit/rollback
+21 Hello World Servlet
+22 Student details HTML form + Servlet
+23 doGet/doPost demonstration
+24 Servlet login
+25 Sum of two numbers Servlet
+26 JSP scripting elements
+27 Display student records in JSP/JDBC
+28 JSP login form + Servlet validation
+29 JSP insert and list students
+30 JSP search/update/delete student records

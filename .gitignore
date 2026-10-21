@@ -1,0 +1,13 @@
+# Compiled class files
+*.class
+
+# Maven build artifacts
+target/
+
+# Operating System files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
