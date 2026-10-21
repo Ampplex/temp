@@ -1,4 +1,6 @@
 # Skill-Based Course V – Advanced Java Programming
+chats: https://chatgpt.com/share/6ad91399-7c2c-83e8-bacf-9a1cfacd3087?ogimg=plain
+
 ## Implementations for all 30 practical experiments
 
 This folder contains beginner-friendly source code grouped by topic. Each `ExpNN_*.java` class is a separate program unless noted otherwise.
