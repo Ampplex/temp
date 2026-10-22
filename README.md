@@ -3,6 +3,9 @@ chats: https://chatgpt.com/share/6ad91399-7c2c-83e8-bacf-9a1cfacd3087?ogimg=plai
 
 ## Implementations for all 30 practical experiments
 
+> [!TIP]
+> **Windows Users & Lab Exams:** If you are setting up and running these practicals on a Windows lab PC, refer to the dedicated **[Windows Setup & Execution Guide](windows_setup.md)** for complete step-by-step instructions (JDK, MySQL/XAMPP, Maven, Tomcat, and troubleshooting).
+
 This folder contains beginner-friendly source code grouped by topic. Each `ExpNN_*.java` class is a separate program unless noted otherwise.
 
 ## 1. Swing (Experiments 1–6)
