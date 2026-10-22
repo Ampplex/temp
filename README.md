@@ -24,35 +24,104 @@ java Exp08_MouseListenerDemo
 ```
 
 ## 3. JDBC (Experiments 13–20)
-1. Install MySQL Server and create/open a SQL client.
-2. Run `03_JDBC/schema.sql` to create the `college` database, `students` and `departments` tables, and sample records.
-3. In `03_JDBC/DBUtil.java`, set `USER` and `PASSWORD` for your MySQL account.
-4. Add MySQL Connector/J to your classpath. For example, if `mysql-connector-j-<version>.jar` is in this folder:
+1. Install and start MySQL Server:
+   ```bash
+   brew install mysql
+   brew services start mysql
+   ```
+2. Initialize the `college` database with tables and sample records:
+   ```bash
+   mysql -u root -pchange_me < 03_JDBC/schema.sql
+   ```
+3. `03_JDBC/DBUtil.java` is preconfigured for user `root` and password `change_me` on port 3306.
+4. The driver jar `mysql-connector-j-9.4.0.jar` is already placed inside `03_JDBC/`.
+5. Compile and run:
 
 macOS/Linux:
 ```bash
-javac -cp ".:mysql-connector-j-<version>.jar" DBUtil.java Exp13_DisplayStudents.java
-java -cp ".:mysql-connector-j-<version>.jar" Exp13_DisplayStudents
+cd 03_JDBC
+javac -cp ".:mysql-connector-j-9.4.0.jar" DBUtil.java Exp13_DisplayStudents.java
+java -cp ".:mysql-connector-j-9.4.0.jar" Exp13_DisplayStudents
 ```
-Windows uses `;` rather than `:` in the classpath. Compile the desired `ExpNN_*.java` alongside `DBUtil.java`; Experiment 19 opens a Swing table window.
+Windows (use `;` as classpath separator):
+```cmd
+cd 03_JDBC
+javac -cp ".;mysql-connector-j-9.4.0.jar" DBUtil.java Exp13_DisplayStudents.java
+java -cp ".;mysql-connector-j-9.4.0.jar" Exp13_DisplayStudents
+```
 
-The JDBC examples use these columns: `id`, `name`, `age`, `email`, `course`, `dept_id`. If your college lab schema differs, update the SQL and column names accordingly.
+Replace `Exp13_DisplayStudents` with the desired experiment name (`Exp14_InsertStudent`, `Exp15_UpdateStudent`, `Exp16_DeleteStudent`, `Exp17_SearchStudent`, `Exp18_JoinTables`, `Exp19_StudentsJTable`, `Exp20_TransactionDemo`).
 
 ## 4. Servlets (Experiments 21–25)
-These examples use the `jakarta.servlet.*` namespace for Tomcat 10+. They use annotations such as `@WebServlet`, so no `web.xml` is required. The HTML forms belong in `src/main/webapp`; Java servlet classes belong in `src/main/java`.
+These examples use Jakarta Servlet 6 (`jakarta.servlet.*`) annotations like `@WebServlet`.
 
-With Maven installed, from `04_Servlets` run:
+### Prerequisites
+Install Maven and Tomcat (if not already installed):
 ```bash
-mvn package
+brew install maven tomcat
 ```
-Deploy `target/advanced-java-servlets.war` to Tomcat 10.1 or another compatible Jakarta Servlet 6 container. Then use URLs such as `/advanced-java-servlets/hello`, `/advanced-java-servlets/student-form.html`, `/advanced-java-servlets/login-form.html`, `/advanced-java-servlets/sum-form.html`, and `/advanced-java-servlets/get-post`.
 
-If your lab uses Tomcat 9, it expects `javax.servlet.*`, not `jakarta.servlet.*`; change the imports and use the matching Servlet API dependency/container version.
+### Build & Deploy
+1. Build the WAR package:
+   ```bash
+   cd 04_Servlets
+   mvn package
+   ```
+2. Deploy `target/advanced-java-servlets.war` to Tomcat's `webapps` folder:
+   ```bash
+   cp target/advanced-java-servlets.war /opt/homebrew/opt/tomcat/libexec/webapps/
+   ```
+3. Start or restart Tomcat:
+   ```bash
+   brew services restart tomcat
+   # OR run directly in the foreground:
+   catalina run
+   ```
 
-## 5. JSP and database integration (Experiments 26–30)
-The JSP examples are in `05_JSP/src/main/webapp`. The JSP web app uses `jakarta.servlet` and MySQL Connector/J in its `pom.xml`. Update the MySQL username/password in each JSP file before running. Build with `mvn package` from `05_JSP` and deploy the generated WAR to a compatible Tomcat 10.1 server. The MySQL Connector/J dependency is included for this web app.
+### Accessing in Browser (Port 8080)
+* **Exp 21 (Hello World):** [http://localhost:8080/advanced-java-servlets/hello](http://localhost:8080/advanced-java-servlets/hello)
+* **Exp 22 (Student Form):** [http://localhost:8080/advanced-java-servlets/student-form.html](http://localhost:8080/advanced-java-servlets/student-form.html) (submits POST to `/student-details`)
+* **Exp 23 (doGet vs doPost):** [http://localhost:8080/advanced-java-servlets/get-post](http://localhost:8080/advanced-java-servlets/get-post)
+* **Exp 24 (Login Validation):** [http://localhost:8080/advanced-java-servlets/login-form.html](http://localhost:8080/advanced-java-servlets/login-form.html) (submits POST to `/login`, credentials `admin` / `java123`)
+* **Exp 25 (Two-Number Sum):** [http://localhost:8080/advanced-java-servlets/sum-form.html](http://localhost:8080/advanced-java-servlets/sum-form.html) (submits POST to `/sum`)
 
-URLs after deployment include `/advanced-java-jsp/welcome.jsp`, `/advanced-java-jsp/students.jsp`, `/advanced-java-jsp/login.jsp`, `/advanced-java-jsp/student-insert.jsp`, and `/advanced-java-jsp/student-management.jsp`.
+## 5. JSP and Database Integration (Experiments 26–30)
+The JSP web application integrates with MySQL using `mysql-connector-j-9.4.0.jar`.
+
+### Prerequisites
+1. Ensure MySQL is running and the `college` database is loaded (see Section 3).
+2. Ensure MySQL Connector/J is in Tomcat's shared `lib/` directory:
+   ```bash
+   cp 03_JDBC/mysql-connector-j-9.4.0.jar /opt/homebrew/opt/tomcat/libexec/lib/
+   ```
+
+### Build & Deploy
+1. Build the WAR package:
+   ```bash
+   cd 05_JSP
+   mvn package
+   ```
+2. Deploy `target/advanced-java-jsp.war` to Tomcat's `webapps` folder:
+   ```bash
+   cp target/advanced-java-jsp.war /opt/homebrew/opt/tomcat/libexec/webapps/
+   ```
+3. Restart Tomcat to apply updates:
+   ```bash
+   brew services restart tomcat
+   ```
+
+### Accessing in Browser (Port 8080)
+* **Exp 26 (Welcome JSP):** [http://localhost:8080/advanced-java-jsp/welcome.jsp?name=Student](http://localhost:8080/advanced-java-jsp/welcome.jsp?name=Student)
+* **Exp 27 (Display Students from MySQL):** [http://localhost:8080/advanced-java-jsp/students.jsp](http://localhost:8080/advanced-java-jsp/students.jsp)
+* **Exp 28 (JSP Login to Servlet):** [http://localhost:8080/advanced-java-jsp/login.jsp](http://localhost:8080/advanced-java-jsp/login.jsp) (submits to `/jsp-login`, credentials `admin` / `java123`)
+* **Exp 29 (Insert Student via JSP):** [http://localhost:8080/advanced-java-jsp/student-insert.jsp](http://localhost:8080/advanced-java-jsp/student-insert.jsp)
+* **Exp 30 (Search, Update & Delete Records):** [http://localhost:8080/advanced-java-jsp/student-management.jsp](http://localhost:8080/advanced-java-jsp/student-management.jsp)
+
+### Stopping Tomcat
+When you are done testing:
+```bash
+brew services stop tomcat
+```
 
 ## Demo credentials
 For the hard-coded login experiments, use:

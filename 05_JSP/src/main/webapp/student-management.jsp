@@ -11,6 +11,7 @@ New name: <input name="name" required> New course: <input name="course" required
 <form method="post" action="student-management.jsp"><input type="hidden" name="action" value="delete">Student ID: <input type="number" name="id" required><button>Delete</button></form>
 <%
 String url="jdbc:mysql://localhost:3306/college?useSSL=false&serverTimezone=UTC", user="root", password="change_me";
+try { Class.forName("com.mysql.cj.jdbc.Driver"); } catch(Exception ignored) {}
 String action=request.getParameter("action");
 if("POST".equalsIgnoreCase(request.getMethod()) && action!=null) {
   try(Connection con=DriverManager.getConnection(url,user,password)) {

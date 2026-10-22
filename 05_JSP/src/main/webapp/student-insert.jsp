@@ -9,6 +9,7 @@ Department ID: <input type="number" name="dept_id" value="1" required><br><br><b
 </form>
 <%
 String url="jdbc:mysql://localhost:3306/college?useSSL=false&serverTimezone=UTC", user="root", password="change_me";
+try { Class.forName("com.mysql.cj.jdbc.Driver"); } catch(Exception ignored) {}
 if ("POST".equalsIgnoreCase(request.getMethod())) {
   try (Connection con=DriverManager.getConnection(url,user,password);
        PreparedStatement ps=con.prepareStatement("INSERT INTO students(name,age,email,course,dept_id) VALUES(?,?,?,?,?)")) {

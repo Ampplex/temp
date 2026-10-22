@@ -5,6 +5,11 @@
 <%
 String url = "jdbc:mysql://localhost:3306/college?useSSL=false&serverTimezone=UTC";
 String dbUser = "root", dbPassword = "change_me";
+try {
+    Class.forName("com.mysql.cj.jdbc.Driver");
+} catch (ClassNotFoundException e) {
+    out.println("<p>Driver error: " + e.getMessage() + "</p>");
+}
 try (Connection con = DriverManager.getConnection(url, dbUser, dbPassword);
      PreparedStatement ps = con.prepareStatement("SELECT id,name,age,email,course FROM students ORDER BY id");
      ResultSet rs = ps.executeQuery()) {
